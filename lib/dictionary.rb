@@ -1,4 +1,4 @@
-# this should be a Dcitionary class
+class Dictionary
 
 def english_in_to_braille
 
@@ -103,4 +103,6 @@ def braille_to_numbers
     [".0","0.",".."] => "9",
     [".0","00",".."] => "0"
   }
+end
+
 end
