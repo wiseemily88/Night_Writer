@@ -4,28 +4,66 @@ require './lib/file_reader'
 
 
 class Converter
-  attr_reader :translated_braile
+  attr_reader :translated_braille, :first_line, :second_line, :third_line
 
   def initialize
-    @translated_braile = []
+    @translated_braille = []
     @first_line = ""
     @second_line = ""
     @third_line = ""
+    @first_line_string = ""
   end
 
-  def english_to_braille(letter)
-    @translated_braile = Dictionary.english_in_to_braille[letter]
-    binding.pry
+  def english_to_braille(messages)
+    split_message_array = messages.chars
+    split_message_array.map do |letter|
+      @translated_braille = Dictionary.english_in_to_braille[letter]
+    end
   end
 
-  def split_lines(translated_braile)
-    first_line = translated_braile[0]
-    second_line = translated_braile[1]
-    third_line = translated_braile[2]
+  def split_lines(translated_braille)
+    first_lines(translated_braille)
+    second_lines(translated_braille)
+    third_lines(translated_braille)
   end
 
-  def print_transpose(first_line, second_line, third_line)
+  def first_lines(translated_braille)
+    index_count = 0
+    translated_braille.count.times do |index_count|
+      @first_line << translated_braille[index_count][0]
+      index_count+= 1
+    end
   end
+
+  def second_lines(translated_braille)
+    index_count = 0
+    translated_braille.count.times do |index_count|
+      @second_line << translated_braille[index_count][1]
+      index_count+= 1
+    end
+  end
+
+  def third_lines(translated_braille)
+    index_count = 0
+    translated_braille.count.times do |index_count|
+      @third_line << translated_braille[index_count][2]
+      index_count+= 1
+    end
+  end
+    # @second_line = translated_braille[1]
+    # @third_line = translated_braile[2]
+
+
+
+  # def print_transpose(first_line, second_line, third_line)
+  #
+  #   temp = first_line + '\n'
+  #   temp1 = second_line + '\n'
+  #   temp2 = third_line + '\n'
+  #   transposed = temp + temp1 + temp2
+  #
+  #
+  # end
 end
 #   attr_reader :first_line_string, :second_line_string, :third_line_string
 #
