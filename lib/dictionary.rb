@@ -1,6 +1,6 @@
-class Dictionary
+module Dictionary
 
-def english_in_to_braille
+def self.english_in_to_braille
 
  { "a" => ["0.","..",".."],
     "b" => ["0.","0.",".."],

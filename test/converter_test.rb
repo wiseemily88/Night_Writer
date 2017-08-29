@@ -11,6 +11,31 @@ class ConverterTest < Minitest::Test
     assert_instance_of Converter , converter
   end
 
+  def test_eng_to_braille_return_braille_from_eng
+    converter = Converter.new
+    converter.english_to_braille("a")
+
+
+    assert_equal ["0.","..",".."], converter.english_to_braille("a")
+  end
+
+  def test_split_lines_returns_3_strings_from_array
+    skip
+    converter = Converter.new
+    converter.english_to_braille("a")
+
+    expected_first_line = "0."
+    expected_second_line = ".."
+    expected_third_line = ".."
+
+    converter.split_lines()
+    assert_equal expected_first_line, converter.split_lines.first_line
+    assert_equal expected_second_line, converter.split_lines.second_line
+    assert_equal expected_third_line, converter.split_lines.third_line
+
+  end
+
+
   def test_convert_to_array_reads_txt_in_array
     skip
     converter = Converter.new
