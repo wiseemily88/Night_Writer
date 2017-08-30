@@ -108,19 +108,22 @@ class ConverterTest < Minitest::Test
   end
 
   def test_print_transpose_returns_3_strings_together
-
     converter = Converter.new
     translated_braille = converter.english_to_braille("hello")
     converter.split_lines(translated_braille)
 
     expected = "0.0.0.0.0.\n00.00.0..0\n....0.0.0."
-
     assert_equal expected, converter.print_transpose(translated_braille)
   end
 
-  def test_it_accepts_capitalize
+  def test_braille_to_english_returns_braille
+    converter = Converter.new
+    translated_english = converter.braille_to_english("0.0.0.0.0.\n00.00.0..0\n....0.0.0.")
 
+    expected = "hello"
+    assert_equal expected, converter.translated_english
   end
+
 
 
 

@@ -25,6 +25,11 @@ class Converter
     @translated_braille
   end
 
+  def braille_to_english(messages)
+  #take the 
+  end
+
+
   def split_lines(translated_braille)
     first_lines(translated_braille)
     second_lines(translated_braille)
