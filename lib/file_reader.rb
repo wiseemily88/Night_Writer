@@ -1,6 +1,4 @@
 
-
-
 class FileReader
   attr_reader :file_content
   attr_accessor :formatted_text

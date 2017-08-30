@@ -1,33 +1,42 @@
-
+require 'pry'
 require './lib/dictionary'
 require './lib/file_reader'
 
 
 class Converter
-  attr_reader :translated_braille, :first_line, :second_line,
-  :third_line, :first_line_braille, :second_line_braille, :third_line_braille
+  # attr_reader  :first_line, :second_line,
+  # :third_line, :first_line_braille, :second_line_braille, :third_line_braille
+  #
+  # def initialize
+  #   #@translated_braille = []
+  #   # @first_line = ""
+  #   # @second_line = ""
+  #   # @third_line = ""
+  #   # @first_line_braille = []
+  #   # @second_line_braille = []
+  #   # @third_line_braille = []
+  # end
 
-  def initialize
-    @translated_braille = []
-    @first_line = ""
-    @second_line = ""
-    @third_line = ""
-    @first_line_braille = []
-    @second_line_braille = []
-    @third_line_braille = []
-
+  def eng_to_braille(file_content)
+    translated_braille = translate_characters(file_content)
+    first_line = first_lines(translated_braille)
+    second_line = second_lines(translated_braille)
+    third_line = third_lines(translated_braille)
+    combined_lines = combined_lines(first_line, second_line, third_line)
   end
 
-  def english_to_braille(messages)
-    split_message_array = messages.chars
+
+  def translate_characters(file_content)
+    translated_braille = []
+    split_message_array = file_content.chars
     split_message_array.each do |letter|
       if ("a".."z").include?(letter)
-        @translated_braille << Dictionary.english_in_to_braille[letter]
+        translated_braille << Dictionary.english_in_to_braille[letter]
       elsif ("A".."Z").include?(letter)
-        @translated_braille << ["..","..",".0"] << Dictionary.english_in_to_braille[letter.downcase]
+        translated_braille << ["..","..",".0"] << Dictionary.english_in_to_braille[letter.downcase]
       end
     end
-    @translated_braille
+    translated_braille
   end
 
 
@@ -57,58 +66,53 @@ end
 
 
 
-  def combined_lines(translated_braille)
-    first_lines(translated_braille)
-    second_lines(translated_braille)
-    third_lines(translated_braille)
+  def combined_lines(first_line, second_line, third_line)
+    message_array = []
+    while first_line.length > 0
+
+      formatted_first_line = first_line.slice!(0..79)
+      formatted_second_line = second_line.slice!(0..79)
+      formatted_third_line = third_line.slice!(0..79)
+      message_array << formatted_first_line.concat("\n") + formatted_second_line.concat("\n") + formatted_third_line
+    end
+    message_array.join("\n")
   end
 
   def first_lines(translated_braille)
+    first_line = ""
     index_count = 0
     translated_braille.count.times do |index_count|
-      @first_line << translated_braille[index_count][0]
+      first_line << translated_braille[index_count][0]
       index_count+= 1
-
     end
+    first_line
   end
 
   def second_lines(translated_braille)
+    second_line = ""
     index_count = 0
     translated_braille.count.times do |index_count|
-      @second_line << translated_braille[index_count][1]
+      second_line << translated_braille[index_count][1]
       index_count+= 1
     end
+    second_line
   end
 
   def third_lines(translated_braille)
+    third_line = ""
     index_count = 0
     translated_braille.count.times do |index_count|
-      @third_line << translated_braille[index_count][2]
+      third_line << translated_braille[index_count][2]
       index_count+= 1
     end
+    third_line
   end
-
-
-  def print_transpose(translated_braille)
-
-    temp = first_line + "\n"
-    temp1 = second_line + "\n"
-    temp2 = third_line
-    transposed = temp + temp1 + temp2
-
-  end
-
 
 
 end
 
 
-#
-#   def convert_file_content_to_array
-#     #file_content = new_reader.read - move this to night-write
-#     file_content.gsub!(/[\n]/, '')
-#     @formatted_text = file_content.chars
-#   end
+
 #
 #   def is_braille?
 #     file_content.join.scan(/[a-zA-Z1-9]/).empty?
