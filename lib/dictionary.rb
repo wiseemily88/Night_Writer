@@ -104,5 +104,8 @@ def braille_to_numbers
     [".0","00",".."] => "0"
   }
 end
+def capitalized
+  A..Z
+end
 
 end

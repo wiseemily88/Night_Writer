@@ -11,14 +11,18 @@ class Converter
     @first_line = ""
     @second_line = ""
     @third_line = ""
-    @first_line_string = ""
   end
 
   def english_to_braille(messages)
     split_message_array = messages.chars
-    split_message_array.map do |letter|
-      @translated_braille = Dictionary.english_in_to_braille[letter]
+    split_message_array.each do |letter|
+      if ("a".."z").include?(letter)
+        @translated_braille << Dictionary.english_in_to_braille[letter]
+      elsif ("A".."Z").include?(letter)
+        @translated_braille << ["..","..",".0"] << Dictionary.english_in_to_braille[letter.downcase]
+      end
     end
+    @translated_braille
   end
 
   def split_lines(translated_braille)
@@ -32,6 +36,7 @@ class Converter
     translated_braille.count.times do |index_count|
       @first_line << translated_braille[index_count][0]
       index_count+= 1
+
     end
   end
 
@@ -50,20 +55,19 @@ class Converter
       index_count+= 1
     end
   end
-    # @second_line = translated_braille[1]
-    # @third_line = translated_braile[2]
+
+
+  def print_transpose(translated_braille)
+
+    temp = first_line + "\n"
+    temp1 = second_line + "\n"
+    temp2 = third_line
+    transposed = temp + temp1 + temp2
+
+  end
 
 
 
-  # def print_transpose(first_line, second_line, third_line)
-  #
-  #   temp = first_line + '\n'
-  #   temp1 = second_line + '\n'
-  #   temp2 = third_line + '\n'
-  #   transposed = temp + temp1 + temp2
-  #
-  #
-  # end
 end
 #   attr_reader :first_line_string, :second_line_string, :third_line_string
 #
