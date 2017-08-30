@@ -3,6 +3,7 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/converter'
 require './lib/file_reader'
+require 'pry'
 
 class ConverterTest < Minitest::Test
 
@@ -142,6 +143,41 @@ class ConverterTest < Minitest::Test
     assert_equal expected, converter.eng_to_braille("HEllo")
   end
 
+  def test_eng_to_braille_translates_special_characters_and_formats_message
+    converter = Converter.new
+    expected = "..............\n00....0...000.\n0...0...00.000"
+    input = "! ',-.?"
+
+    assert_equal expected, converter.eng_to_braille(input)
+  end
+
+  def test_eng_to_braille_translates_80_character_string
+    converter = Converter.new
+    expected = "0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.\n................................................................................\n................................................................................"
+    input = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+    assert_equal expected, converter.eng_to_braille(input)
+  end
+
+  def test_eng_to_braille_translates_80_character_string
+    converter = Converter.new
+    expected = <<~EXPECTED
+      ..............0.0.00000.00000..0.00.0.00000.00000..0.00.0..000000...0...0...00..
+      ..00..0...000...0....0.00.00000.00..0....0.00.00000.00..0.00...0.0......0.......
+      ..0.0...00.000....................0.0.0.0.0.0.0.0.0.0.0000.0000000.0...0...0...0
+      00..0...00..00..0....0...0..0...0...00..00..0...00..00..0....0...0..0...0....0..
+      .0...0..0...00..00..0...00......0........0...0..0...00..00..0...00......0...00..
+      ...0...0...0...0...0...0...00..00..00..00..00..00..00..00..00..00..000.000.0.0.0
+      00..00..0.
+      .....0...0
+      00.000.000
+EXPECTED
+    input = " !',-.?abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    actual = converter.eng_to_braille(input)
+
+    assert_equal expected.chomp, actual
+
+  end
 
   def test_split_lines_returns_3_arrays
     skip

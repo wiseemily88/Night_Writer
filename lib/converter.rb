@@ -34,9 +34,12 @@ class Converter
         translated_braille << Dictionary.english_in_to_braille[letter]
       elsif ("A".."Z").include?(letter)
         translated_braille << ["..","..",".0"] << Dictionary.english_in_to_braille[letter.downcase]
+      elsif (" ".."?").include?(letter)
+        translated_braille << Dictionary.english_in_to_braille[letter]
       end
     end
     translated_braille
+  
   end
 
 
