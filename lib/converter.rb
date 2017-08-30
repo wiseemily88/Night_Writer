@@ -4,13 +4,18 @@ require './lib/file_reader'
 
 
 class Converter
-  attr_reader :translated_braille, :first_line, :second_line, :third_line
+  attr_reader :translated_braille, :first_line, :second_line,
+  :third_line, :first_line_braille, :second_line_braille, :third_line_braille
 
   def initialize
     @translated_braille = []
     @first_line = ""
     @second_line = ""
     @third_line = ""
+    @first_line_braille = []
+    @second_line_braille = []
+    @third_line_braille = []
+
   end
 
   def english_to_braille(messages)
@@ -25,12 +30,34 @@ class Converter
     @translated_braille
   end
 
-  def braille_to_english(messages)
-  #take the 
+
+  def split_braille_on_new_line(messages)
+    messages.split("\n").each_slice(1).to_a
+  end
+
+  def assign_braille(messages)
+    broken_lines = split_braille_on_new_line(messages)
+    @first_line_braille = broken_lines[0].to_s
+    @second_line_braille = broken_lines [1].to_s
+    @third_line_braille = broken_lines [2].to_s
+    broken_lines
   end
 
 
-  def split_lines(translated_braille)
+ def braille_to_english(split_lines)
+  #   index_count = 0
+  #
+  #   split_lines[0].count times do |line|
+  #     translated_english << split_lines[0][0..1]
+end
+
+  #take the string and assign the values to an Array
+  #split the string at the \n
+  # match the array with the appropriate key value in the hash
+
+
+
+  def combined_lines(translated_braille)
     first_lines(translated_braille)
     second_lines(translated_braille)
     third_lines(translated_braille)
@@ -74,15 +101,8 @@ class Converter
 
 
 end
-#   attr_reader :first_line_string, :second_line_string, :third_line_string
-#
-#   def initialize
-#     @first_line_string = ""
-#     @second_line_string = ""
-#     @third_line_string = ""
-#     @formatted_text = ""
-#
-#   end
+
+
 #
 #   def convert_file_content_to_array
 #     #file_content = new_reader.read - move this to night-write
@@ -102,60 +122,8 @@ end
 #     end
 #   end
 #
-#   def check_for_capitals
-#     #if it is english check the message_content array has any upcase
-#   end
-#
-#   def match_english_to_braille(@formatted_text)
-#     translated_braile = []
-#     message_input.map do |letter|
-#
-#       translated_braile = @dictionary.english_in_to_braille[letter]
-#       first_line = translated_braile[0]
-#       second_line = translated_braile[1]
-#       third_line = translated_braile[2]
-#
-#     #def a method that will take the first letter and assign the a first, second, third  string
-#      first_line_string += first_line.to_s
-#      second_line_string += second_line.to_s
-#      third_line_string += third_line.to_s # check if this a string or not
-#
-#      end
-#
-#   def print_all_three(first_line_string, second_line_string, third_line_string)
-#     combined_string = first_line_string.concat('\n') + second_line_string.concat('\n') + third_line_strin
-#      combined_string
-#   end
-#
-#   def match_braille_to_english(message_input)
-#
-#     message_input.map do |letter|
-#       #new_dictionary = Dictionary.new
-#       translated_braile = Dictionary.braille_to_english[letter]
-#       split_lines
-#     end
-#   end
-#
-#   def split_lines (translated_braile)
-#       first_line = translated_braile[0]
-#       second_line = translated_braile[1]
-#       third_line = translated_braile[2]
-#   end
-#
-#     #def a method that will take the first letter and assign the a first, second, third  string
-#   def create_line_strings(first_line, second_line, third_line)
-#      first_line_string += first_line
-#      second_line_string += second_line
-#      third_line_string += third_line
-#   end
-#
-#
-#
-#
-# end
-#
-#
-#
+
+
 # #
 # # # IF BRAILE def method to match the english character to braille, calling from the dictionary hash
 # # # initialize the dictionary and call the method. english_in_to_braille

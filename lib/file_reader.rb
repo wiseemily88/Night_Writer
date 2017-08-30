@@ -6,7 +6,7 @@ class FileReader
   attr_reader :file_content
 
   def initialize
-    @file_content = ""
+    @file_name =
   end
 
   def read
