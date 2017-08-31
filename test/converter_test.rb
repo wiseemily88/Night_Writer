@@ -3,7 +3,6 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/converter'
 require './lib/file_reader'
-require 'pry'
 
 class ConverterTest < Minitest::Test
 
@@ -205,16 +204,6 @@ EXPECTED
 
   end
 
-  def test_braille_to_english_returns_braille
-    skip
-    converter = Converter.new
-    input = "0.0.0.0.0.\n00.00.0..0\n....0.0.0."
-    translated_english = converter.braille_to_english(input)
-
-    expected = "hello"
-    assert_equal expected, converter.translated_english
-  end
-
   def test_match_braille_to_english
     converter = Converter.new
     input = [
@@ -231,7 +220,7 @@ EXPECTED
 
 
   def test_if_identities_capitalized_letters
-  
+
     converter = Converter.new
     input = [
       ["..","..",".0"],
@@ -248,29 +237,24 @@ EXPECTED
 
   end
 
+  def test_if_braille_to_english_translates_to_english
 
+    converter = Converter.new
+    input = ("0.0.0.0.0.\n00.00.0..0\n....0.0.0.")
+    expected = "hello"
 
+    assert_equal expected ,converter.braille_to_english(input)
+  end
 
-  # def test_is_braille_returns_false_when_text_is_eng
-  #   skip
-  #   file_content = FileReader.new(Read.import("./data/message.txt"))
-  #
-  #   refute file_content.is_braille?
-  # end
-  #
-  # def test_is_braille_returns_true_when_text_is_braille
-  #   skip
-  #   file_content = FileReader.new(Read.import("./data/braille.txt"))
-  #
-  #   assert file_content.is_braille?
-  # end
-  #
-  # def test_braille_or_english_executes
-  #   skip
-  #   file_content = FileReader.new(Read.import("./data/braille.txt"))
-  #
-  #   assert file_content.is_braille?
-  # end
+  def test_if_braille_to_english_translates_to_english
+
+    converter = Converter.new
+    input = ("..0.0.0.0.0.\n..00.00.0..0\n.0....0.0.0.")
+    expected = "Hello"
+
+    assert_equal expected ,converter.braille_to_english(input)
+  end
+
 
 
 end

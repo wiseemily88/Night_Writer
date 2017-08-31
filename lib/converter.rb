@@ -4,18 +4,6 @@ require './lib/file_reader'
 
 
 class Converter
-  # attr_reader  :first_line, :second_line,
-  # :third_line, :first_line_braille, :second_line_braille, :third_line_braille
-  #
-  # def initialize
-  #   #@translated_braille = []
-  #   # @first_line = ""
-  #   # @second_line = ""
-  #   # @third_line = ""
-  #   # @first_line_braille = []
-  #   # @second_line_braille = []
-  #   # @third_line_braille = []
-  # end
 
   def eng_to_braille(file_content)
     translated_braille = translate_characters(file_content)
@@ -84,12 +72,12 @@ class Converter
     third_line
   end
 
-  def braille_to_english(split_lines)
-   #   index_count = 0
-   #
-   #   split_lines[0].count times do |line|
-   #     translated_english << split_lines[0][0..1]
- end
+
+  def braille_to_english(file_content)
+     split_array = split_braille_into_array(file_content)
+     braille_characters = assign_braille(split_array)
+     translated_english = match_braille_to_english(braille_characters)
+  end
 
   def split_braille_into_array(file_content)
     split_array = file_content.split("\n")
@@ -129,9 +117,6 @@ class Converter
     end
   end
 
-
-
-
 end
 
 
@@ -149,36 +134,3 @@ end
 #     end
 #   end
 #
-
-
-# #
-# # # IF BRAILE def method to match the english character to braille, calling from the dictionary hash
-# # # initialize the dictionary and call the method. english_in_to_braille
-# # # execute the match each letter in the message_input array to the dictionary
-# # # it needs to look if andy letters or words are all caps or not & equals capital in our code
-# # # be able to add the capital character
-# #
-# # # return value is an array
-# # # turn the array into 3 strings based on the order (first_line, second_line, etc)
-# # # keep adding to the string for each letter
-# # # combine the 3 strings to print together
-# #
-# # #if it is braille to text
-# # #read the string, reassign to a horizantal array and then match to the key
-# #
-# # #method to combine the 3 strings
-# # def print_all_three
-# #   print first_line_string.concat('\n') + second_line_string.concat('\n') + third_line_string
-# # binding.pry
-# # end
-# #
-# # print_all_three
-# # # #take english string inputs and convert each letter to array
-# #
-# # #go throuh each element in letter’s array and evaluate each element grab them do something with them.
-# #
-# # #look at the hash and return the braille array associated with that key
-# #
-# # #each_slice(1) { |a| p a } takes the array and turns it vertical
-# #
-# # #take the array to a string to be only 80 positions wide and that will be our output braille file
