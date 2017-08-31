@@ -227,9 +227,26 @@ EXPECTED
     expected = "hello"
 
     assert_equal expected ,converter.match_braille_to_english(input)
-
   end
 
+
+  def test_if_identities_capitalized_letters
+  
+    converter = Converter.new
+    input = [
+      ["..","..",".0"],
+      ["0.","00",".."],
+      ["0.",".0",".."],
+      ["0.","0.",'0.'],
+      ["0.","0.",'0.'],
+      ["0.",".0",'0.']
+    ]
+    expected = "Hello"
+
+    assert_equal expected ,converter.match_braille_to_english(input)
+
+
+  end
 
 
 

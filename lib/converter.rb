@@ -112,9 +112,26 @@ class Converter
     braille_characters.map do |braille_character|
       translated_english << Dictionary.braille_to_english[braille_character]
 
-    end
-    translated_english.join
+   end
+    fix_for_capitals(translated_english).uniq.join
+
+
   end
+
+  def fix_for_capitals(translated_english)
+    translated_braille_with_capitals = []
+    translated_english.map.with_index do |letter, index|
+      if letter.eql?( "&")
+        translated_braille_with_capitals << translated_english.delete_at(index+1).capitalize
+      else
+        translated_braille_with_capitals  << letter
+      end
+    end
+  end
+
+
+
+
 end
 
 
