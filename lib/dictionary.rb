@@ -51,7 +51,7 @@ def self.english_in_to_braille
   }
 end
 
-def braille_to_english
+def self.braille_to_english
   { ["0.","..",".."] => "a",
     ["0.","0.",".."] => "b",
     ["00","..",".."] => "c",

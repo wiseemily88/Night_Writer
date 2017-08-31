@@ -39,34 +39,7 @@ class Converter
       end
     end
     translated_braille
-  
   end
-
-
-  def split_braille_on_new_line(messages)
-    messages.split("\n").each_slice(1).to_a
-  end
-
-  def assign_braille(messages)
-    broken_lines = split_braille_on_new_line(messages)
-    @first_line_braille = broken_lines[0].to_s
-    @second_line_braille = broken_lines [1].to_s
-    @third_line_braille = broken_lines [2].to_s
-    broken_lines
-  end
-
-
- def braille_to_english(split_lines)
-  #   index_count = 0
-  #
-  #   split_lines[0].count times do |line|
-  #     translated_english << split_lines[0][0..1]
-end
-
-  #take the string and assign the values to an Array
-  #split the string at the \n
-  # match the array with the appropriate key value in the hash
-
 
 
   def combined_lines(first_line, second_line, third_line)
@@ -111,7 +84,37 @@ end
     third_line
   end
 
+  def braille_to_english(split_lines)
+   #   index_count = 0
+   #
+   #   split_lines[0].count times do |line|
+   #     translated_english << split_lines[0][0..1]
+ end
 
+  def split_braille_into_array(file_content)
+    split_array = file_content.split("\n")
+  end
+
+  def assign_braille(split_array)
+    braille_characters = []
+    while split_array.first.length / 2 > 0
+      braille_character = []
+      braille_character << split_array[0].slice!(0..1)
+      braille_character << split_array[1].slice!(0..1)
+      braille_character << split_array[2].slice!(0..1)
+      braille_characters << braille_character
+    end
+    braille_characters
+  end
+
+  def match_braille_to_english(braille_characters)
+    translated_english = []
+    braille_characters.map do |braille_character|
+      translated_english << Dictionary.braille_to_english[braille_character]
+
+    end
+    translated_english.join
+  end
 end
 
 

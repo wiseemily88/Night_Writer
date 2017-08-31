@@ -180,26 +180,29 @@ EXPECTED
   end
 
   def test_split_lines_returns_3_arrays
-    skip
-    converter = Converter.new
-    split_lines = converter.split_braille_on_new_line("0.0.0.0.0.\n00.00.0..0\n....0.0.0.")
 
-    expected = [["0.0.0.0.0."], ["00.00.0..0"], ["....0.0.0."]]
+    converter = Converter.new
+    split_lines = converter.split_braille_into_array("0.0.0.0.0.\n00.00.0..0\n....0.0.0.")
+
+    expected = ["0.0.0.0.0.", "00.00.0..0", "....0.0.0."]
 
     assert_equal expected, split_lines
   end
 
   def test_assign_braille_updates_instance_variables
-    skip
-    converter = Converter.new
-    broken_lines = converter.assign_braille("0.0.0.0.0.\n00.00.0..0\n....0.0.0.")
-    first_line_braile = "0.0.0.0.0."
-    second_line_braile = "00.00.0..0"
-    third_line_braile = "....0.0.0."
 
-    assert_equal converter.first_line_braille, broken_lines[0].to_s
-    assert_equal converter.second_line_braille, broken_lines[1].to_s
-    assert_equal converter.third_line_braille, broken_lines[2].to_s
+    converter = Converter.new
+    split_array = converter.assign_braille(["0.0.0.0.0.", "00.00.0..0", "....0.0.0."])
+
+    expected = [
+      ["0.","00",".."],
+      ["0.",".0",".."],
+      ["0.","0.",'0.'],
+      ["0.","0.",'0.'],
+      ["0.",".0",'0.']
+    ]
+    assert_equal expected , split_array
+
   end
 
   def test_braille_to_english_returns_braille
@@ -212,6 +215,20 @@ EXPECTED
     assert_equal expected, converter.translated_english
   end
 
+  def test_match_braille_to_english
+    converter = Converter.new
+    input = [
+      ["0.","00",".."],
+      ["0.",".0",".."],
+      ["0.","0.",'0.'],
+      ["0.","0.",'0.'],
+      ["0.",".0",'0.']
+    ]
+    expected = "hello"
+
+    assert_equal expected ,converter.match_braille_to_english(input)
+
+  end
 
 
 
