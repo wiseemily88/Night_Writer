@@ -118,19 +118,3 @@ class Converter
   end
 
 end
-
-
-
-#
-#   def is_braille?
-#     file_content.join.scan(/[a-zA-Z1-9]/).empty?
-#   end
-#
-#   def braille_or_english_path
-#     if is_braille?
-#       match_braille_to_english(@formatted_text)
-#     else
-#       match_english_to_braille(@formatted_text)
-#     end
-#   end
-#
