@@ -75,7 +75,8 @@ class Converter
 
   def braille_to_english(file_content)
      split_array = split_braille_into_array(file_content)
-     braille_characters = assign_braille(split_array)
+     original_lines = original_lines(split_array)
+     braille_characters = assign_braille(original_lines)
      translated_english = match_braille_to_english(braille_characters)
   end
 
@@ -83,9 +84,19 @@ class Converter
     split_array = file_content.split("\n")
   end
 
+  def original_lines(split_array)
+    while split_array.length > 3
+      split_array[0] += split_array.delete_at(3)
+      split_array[1] += split_array.delete_at(3)
+      split_array[2] += split_array.delete_at(3)
+    end
+    split_array
+  end
+
   def assign_braille(split_array)
+
     braille_characters = []
-    while split_array.first.length / 2 > 0
+    while split_array.first.length > 0
       braille_character = []
       braille_character << split_array[0].slice!(0..1)
       braille_character << split_array[1].slice!(0..1)
@@ -99,7 +110,6 @@ class Converter
     translated_english = []
     braille_characters.map do |braille_character|
       translated_english << Dictionary.braille_to_english[braille_character]
-
    end
     fix_for_capitals(translated_english).uniq.join
 
@@ -110,9 +120,10 @@ class Converter
     translated_braille_with_capitals = []
     translated_english.map.with_index do |letter, index|
       if letter.eql?( "&")
-        translated_braille_with_capitals << translated_english.delete_at(index+1).capitalize
+        translated_braille_with_capitals << translated_english.delete_at(index+1).upcase
       else
         translated_braille_with_capitals  << letter
+
       end
     end
   end

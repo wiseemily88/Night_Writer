@@ -205,6 +205,7 @@ EXPECTED
   end
 
   def test_match_braille_to_english
+
     converter = Converter.new
     input = [
       ["0.","00",".."],
@@ -254,6 +255,81 @@ EXPECTED
 
     assert_equal expected ,converter.braille_to_english(input)
   end
+
+  def test_if_braille_to_english_translates_to_english
+
+    converter = Converter.new
+    input = ("..0...0.0.0.0.\n..00...00.0..0\n.0...0..0.0.0.")
+    expected = "HEllo"
+
+    assert_equal expected ,converter.braille_to_english(input)
+  end
+
+  def test_if_braille_to_english_translates_special_characters
+
+    converter = Converter.new
+    input = [
+    ["..","..",".."],
+    ["..","00","0."],
+    ["..","..","0."],
+    ["..","0.",".."],
+    ["..","..","00"],
+    ["..","00",".0"],
+    ["..","0.","00"]
+    ]
+
+    expected = " !',-.?"
+
+    assert_equal expected, converter.match_braille_to_english(input)
+  end
+
+  def test_braille_to_eng_translates_capitalString
+
+    converter = Converter.new
+    input = <<~EXPECTED
+    ..0...0...00..00
+    ......0........0
+    .0...0...0...0..
+
+EXPECTED
+    expected = "ABCD"
+    actual = converter.braille_to_english(input.chomp)
+
+    assert_equal expected, actual
+
+  end
+
+
+  def test_braille_to_eng_translates_80_character_string
+
+    converter = Converter.new
+    input = "&"
+    expected = " "
+    actual = converter.braille_to_english(input)
+
+    assert_equal expected, actual
+
+  end
+  def test_braille_to_eng_translates_80_character_string
+
+    converter = Converter.new
+    input = <<~EXPECTED
+      ..............0.0.00000.00000..0.00.0.00000.00000..0.00.0..000000...0...0...00..
+      ..00..0...000...0....0.00.00000.00..0....0.00.00000.00..0.00...0.0......0.......
+      ..0.0...00.000....................0.0.0.0.0.0.0.0.0.0.0000.0000000.0...0...0...0
+      00..0...00..00..0....0...0..0...0...00..00..0...00..00..0....0...0..0...0....0..
+      .0...0..0...00..00..0...00......0........0...0..0...00..00..0...00......0...00..
+      ...0...0...0...0...0...0...00..00..00..00..00..00..00..00..00..00..000.000.0.0.0
+      00..00..0.
+      .....0...0
+      00.000.000
+EXPECTED
+    expected = " !',-.?abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    actual = converter.braille_to_english(input.chomp)
+    assert_equal expected, actual
+
+  end
+
 
 
 
