@@ -9,7 +9,7 @@ class NightWrite
     file_content = read_and_format_new_file
     translated_data = convert(file_content)
     export_file = write_file(translated_data)
-    puts "Created '#{ARGV[0]}' containing #{translated_data.count} characters."
+    puts "Created '#{ARGV[1]}' containing #{translated_data.length} characters."
   end
 
   def read_and_format_new_file
@@ -28,3 +28,6 @@ class NightWrite
   end
 
 end
+
+nr = NightWrite.new
+nr.read_reconvert_format_orginal_message
